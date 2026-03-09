@@ -200,7 +200,7 @@ do_china_models() {
             echo -e "  ${CYAN}配置 DeepSeek${NC}"
             echo "  获取 API Key: https://platform.deepseek.com/"
             echo ""
-            read -p "  请输入 DeepSeek API Key: " API_KEY
+            read -s -p "  请输入 DeepSeek API Key: " API_KEY; echo
             if [ -n "$API_KEY" ]; then
                 grep -v "OPENAI_API_KEY\|OPENAI_BASE_URL" "$ENV_FILE" > "$ENV_FILE.tmp" 2>/dev/null || true
                 mv "$ENV_FILE.tmp" "$ENV_FILE"
@@ -213,7 +213,7 @@ do_china_models() {
             echo -e "  ${CYAN}配置 Kimi (月之暗面)${NC}"
             echo "  获取 API Key: https://platform.moonshot.cn/"
             echo ""
-            read -p "  请输入 Moonshot API Key: " API_KEY
+            read -s -p "  请输入 Moonshot API Key: " API_KEY; echo
             if [ -n "$API_KEY" ]; then
                 grep -v "OPENAI_API_KEY\|OPENAI_BASE_URL" "$ENV_FILE" > "$ENV_FILE.tmp" 2>/dev/null || true
                 mv "$ENV_FILE.tmp" "$ENV_FILE"
@@ -226,7 +226,7 @@ do_china_models() {
             echo -e "  ${CYAN}配置通义千问 Qwen${NC}"
             echo "  获取 API Key: https://dashscope.console.aliyun.com/"
             echo ""
-            read -p "  请输入 Qwen API Key: " API_KEY
+            read -s -p "  请输入 Qwen API Key: " API_KEY; echo
             if [ -n "$API_KEY" ]; then
                 grep -v "ZAI_API_KEY" "$ENV_FILE" > "$ENV_FILE.tmp" 2>/dev/null || true
                 mv "$ENV_FILE.tmp" "$ENV_FILE"
@@ -239,7 +239,7 @@ do_china_models() {
             echo "  获取 API Key: https://open.bigmodel.cn/"
             echo "  注意: 通过火山引擎(Volcano Engine)接入"
             echo ""
-            read -p "  请输入 API Key: " API_KEY
+            read -s -p "  请输入 API Key: " API_KEY; echo
             if [ -n "$API_KEY" ]; then
                 echo "# 智谱GLM (via Volcano Engine)" >> "$ENV_FILE"
                 echo "VOLCENGINE_API_KEY=$API_KEY" >> "$ENV_FILE"
@@ -250,7 +250,7 @@ do_china_models() {
             echo -e "  ${CYAN}配置 MiniMax${NC}"
             echo "  获取 API Key: https://platform.minimaxi.com/"
             echo ""
-            read -p "  请输入 MiniMax API Key: " API_KEY
+            read -s -p "  请输入 MiniMax API Key: " API_KEY; echo
             if [ -n "$API_KEY" ]; then
                 grep -v "MINIMAX_API_KEY" "$ENV_FILE" > "$ENV_FILE.tmp" 2>/dev/null || true
                 mv "$ENV_FILE.tmp" "$ENV_FILE"
@@ -262,7 +262,7 @@ do_china_models() {
             echo -e "  ${CYAN}配置豆包 Doubao (字节跳动)${NC}"
             echo "  获取 API Key: https://console.volcengine.com/ark"
             echo ""
-            read -p "  请输入火山引擎 API Key: " API_KEY
+            read -s -p "  请输入火山引擎 API Key: " API_KEY; echo
             if [ -n "$API_KEY" ]; then
                 grep -v "VOLCENGINE_API_KEY" "$ENV_FILE" > "$ENV_FILE.tmp" 2>/dev/null || true
                 mv "$ENV_FILE.tmp" "$ENV_FILE"
@@ -274,7 +274,7 @@ do_china_models() {
             echo -e "  ${CYAN}配置百度千帆${NC}"
             echo "  获取 API Key: https://console.bce.baidu.com/qianfan/"
             echo ""
-            read -p "  请输入千帆 API Key: " API_KEY
+            read -s -p "  请输入千帆 API Key: " API_KEY; echo
             if [ -n "$API_KEY" ]; then
                 echo "QIANFAN_API_KEY=$API_KEY" >> "$ENV_FILE"
                 echo -e "  ${GREEN}百度千帆已配置!${NC}"
@@ -284,7 +284,7 @@ do_china_models() {
             echo -e "  ${CYAN}配置小米 Mimo${NC}"
             echo "  获取 API Key: https://dev.mi.com/mimo"
             echo ""
-            read -p "  请输入 Mimo API Key: " API_KEY
+            read -s -p "  请输入 Mimo API Key: " API_KEY; echo
             if [ -n "$API_KEY" ]; then
                 echo "MIMO_API_KEY=$API_KEY" >> "$ENV_FILE"
                 echo -e "  ${GREEN}小米 Mimo 已配置!${NC}"
@@ -835,7 +835,7 @@ while true; do
             exit 0
             ;;
         *)
-            echo -e "  ${RED}无效选择，请输入 0-14${NC}"
+            echo -e "  ${RED}无效选择，请输入 0-16${NC}"
             ;;
     esac
 

@@ -68,9 +68,13 @@ fi
 
 echo -e "  ${CYAN}[4/4] 配置环境变量...${NC}"
 
-SHELL_RC="$HOME/.zshrc"
-[ ! -f "$SHELL_RC" ] && SHELL_RC="$HOME/.bashrc"
-[ ! -f "$SHELL_RC" ] && SHELL_RC="$HOME/.bash_profile"
+# macOS Catalina+ 默认 zsh，始终写 .zshrc
+if [ "$(basename "$SHELL")" = "zsh" ] || [ ! -f "$HOME/.bashrc" -a ! -f "$HOME/.bash_profile" ]; then
+    SHELL_RC="$HOME/.zshrc"
+else
+    SHELL_RC="$HOME/.bashrc"
+fi
+touch "$SHELL_RC"
 
 if ! grep -q ".uclaw/node/bin" "$SHELL_RC" 2>/dev/null; then
     echo "" >> "$SHELL_RC"

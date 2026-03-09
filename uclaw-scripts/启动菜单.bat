@@ -164,6 +164,11 @@ if /i "%MODEL%"=="a" (
     echo   配置 DeepSeek
     echo   获取 API Key: https://platform.deepseek.com/
     set /p APIKEY="  请输入 DeepSeek API Key: "
+    REM 移除旧配置再写入，避免重复
+    if exist "%ENV_FILE%" (
+        findstr /v "^OPENAI_API_KEY= ^OPENAI_BASE_URL=" "%ENV_FILE%" > "%ENV_FILE%.tmp" 2>nul
+        move /y "%ENV_FILE%.tmp" "%ENV_FILE%" >nul 2>nul
+    )
     echo OPENAI_API_KEY=!APIKEY!>> "%ENV_FILE%"
     echo OPENAI_BASE_URL=https://api.deepseek.com/v1>> "%ENV_FILE%"
     echo   DeepSeek 已配置!
@@ -173,6 +178,10 @@ if /i "%MODEL%"=="b" (
     echo   配置 Kimi
     echo   获取 API Key: https://platform.moonshot.cn/
     set /p APIKEY="  请输入 Moonshot API Key: "
+    if exist "%ENV_FILE%" (
+        findstr /v "^OPENAI_API_KEY= ^OPENAI_BASE_URL=" "%ENV_FILE%" > "%ENV_FILE%.tmp" 2>nul
+        move /y "%ENV_FILE%.tmp" "%ENV_FILE%" >nul 2>nul
+    )
     echo OPENAI_API_KEY=!APIKEY!>> "%ENV_FILE%"
     echo OPENAI_BASE_URL=https://api.moonshot.cn/v1>> "%ENV_FILE%"
     echo   Kimi 已配置!
@@ -182,6 +191,10 @@ if /i "%MODEL%"=="c" (
     echo   配置通义千问
     echo   获取 API Key: https://dashscope.console.aliyun.com/
     set /p APIKEY="  请输入 Qwen API Key: "
+    if exist "%ENV_FILE%" (
+        findstr /v "^ZAI_API_KEY=" "%ENV_FILE%" > "%ENV_FILE%.tmp" 2>nul
+        move /y "%ENV_FILE%.tmp" "%ENV_FILE%" >nul 2>nul
+    )
     echo ZAI_API_KEY=!APIKEY!>> "%ENV_FILE%"
     echo   通义千问已配置!
 )

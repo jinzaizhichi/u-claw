@@ -61,10 +61,29 @@ echo "%%UCLAW_HOME%%\node\node.exe" "%%UCLAW_HOME%%\openclaw\openclaw.mjs" %%*
 
 echo.
 echo   正在添加到系统 PATH...
+set "CURRENT_PATH="
 for /f "tokens=2*" %%a in ('reg query "HKCU\Environment" /v PATH 2^>nul') do set "CURRENT_PATH=%%b"
+
 echo %CURRENT_PATH% | findstr /i ".uclaw" >nul 2>&1
 if errorlevel 1 (
-    setx PATH "%INSTALL_DIR%;%INSTALL_DIR%\node;%CURRENT_PATH%" >nul 2>&1
+    REM 检查 PATH 是否为空（全新账户）
+    if not defined CURRENT_PATH (
+        setx PATH "%INSTALL_DIR%;%INSTALL_DIR%\node" >nul 2>&1
+    ) else (
+        REM 检查 setx 1024 字符限制
+        set "NEW_PATH=%INSTALL_DIR%;%INSTALL_DIR%\node;%CURRENT_PATH%"
+        setlocal enabledelayedexpansion
+        if "!NEW_PATH:~1024,1!" neq "" (
+            echo   [警告] PATH 超过 1024 字符，setx 会截断！
+            echo   请手动添加以下路径到系统 PATH:
+            echo     %INSTALL_DIR%
+            echo     %INSTALL_DIR%\node
+            endlocal
+        ) else (
+            endlocal
+            setx PATH "%INSTALL_DIR%;%INSTALL_DIR%\node;%CURRENT_PATH%" >nul 2>&1
+        )
+    )
     echo   已添加到用户 PATH
 ) else (
     echo   PATH 已配置，跳过

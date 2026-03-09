@@ -128,13 +128,19 @@ info "复制用户脚本..."
 # 从 scripts 模板目录复制（构建脚本同级的 uclaw-scripts/ 目录）
 SCRIPTS_SRC="$SCRIPT_DIR/uclaw-scripts"
 if [ -d "$SCRIPTS_SRC" ]; then
+    cp "$SCRIPTS_SRC/启动菜单.command" "$UCLAW_DIR/" 2>/dev/null || true
+    cp "$SCRIPTS_SRC/启动菜单.bat" "$UCLAW_DIR/" 2>/dev/null || true
     cp "$SCRIPTS_SRC/运行.command" "$UCLAW_DIR/" 2>/dev/null || true
     cp "$SCRIPTS_SRC/运行.bat" "$UCLAW_DIR/" 2>/dev/null || true
     cp "$SCRIPTS_SRC/安装到电脑.command" "$UCLAW_DIR/" 2>/dev/null || true
     cp "$SCRIPTS_SRC/安装到电脑.bat" "$UCLAW_DIR/" 2>/dev/null || true
     cp "$SCRIPTS_SRC/使用说明.txt" "$UCLAW_DIR/" 2>/dev/null || true
-    chmod +x "$UCLAW_DIR/运行.command" "$UCLAW_DIR/安装到电脑.command" 2>/dev/null || true
-    ok "用户脚本已复制"
+    cp "$SCRIPTS_SRC/中国用户指南.txt" "$UCLAW_DIR/" 2>/dev/null || true
+    # 复制教程文档
+    mkdir -p "$UCLAW_DIR/docs"
+    cp "$SCRIPT_DIR/docs/教程-OpenClaw中国区完全指南.md" "$UCLAW_DIR/docs/" 2>/dev/null || true
+    chmod +x "$UCLAW_DIR/启动菜单.command" "$UCLAW_DIR/运行.command" "$UCLAW_DIR/安装到电脑.command" 2>/dev/null || true
+    ok "用户脚本已复制（含启动菜单、中国用户指南）"
 else
     warn "找不到 uclaw-scripts/ 目录，请手动复制脚本到 U-Claw/"
 fi
