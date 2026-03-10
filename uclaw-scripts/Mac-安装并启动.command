@@ -35,7 +35,7 @@ if [ ! -f "$ARCHIVE" ]; then
 fi
 
 # 检查是否已安装
-if [ -d "$INSTALL_DIR/openclaw/node_modules" ]; then
+if [ -d "$INSTALL_DIR/app/core/node_modules" ]; then
     echo -e "  ${GREEN}检测到已安装的 U-Claw${NC}"
     echo "  位置: $INSTALL_DIR"
     echo ""
@@ -55,7 +55,7 @@ if [ -d "$INSTALL_DIR/openclaw/node_modules" ]; then
 fi
 
 # 解压（如果需要）
-if [ ! -d "$INSTALL_DIR/openclaw/node_modules" ]; then
+if [ ! -d "$INSTALL_DIR/app/core/node_modules" ]; then
     echo ""
     echo -e "  ${CYAN}正在解压 U-Claw 到 $INSTALL_DIR ...${NC}"
     echo "  这可能需要 30-60 秒，请稍等..."
@@ -83,4 +83,4 @@ echo -e "  ${CYAN}正在启动 OpenClaw...${NC}"
 echo ""
 
 cd "$INSTALL_DIR"
-exec bash "$INSTALL_DIR/Mac-从U盘启动.command"
+exec bash "$INSTALL_DIR/Mac-Start.command"

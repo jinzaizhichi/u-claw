@@ -1,5 +1,11 @@
 # U-Claw build output bundle (generated release artifact)
 U-Claw/
+U-Claw-v2/
+
+# Marketing assets
+marketing/
+marketing.zip
+social-assets/
 
 # OpenClaw source (users download separately)
 openclaw-2026.3.7/

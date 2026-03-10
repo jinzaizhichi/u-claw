@@ -1,5 +1,5 @@
 ﻿@echo off
-chcp 65001 >nul 2>&1
+chcp 65001 >/dev/null 2>&1
 title U-Claw - Install and Launch
 
 echo.
@@ -23,7 +23,7 @@ if not exist "%ARCHIVE%" (
 )
 
 REM Check if already installed
-if exist "%INSTALL_DIR%\openclaw\node_modules" (
+if exist "%INSTALL_DIR%\app\core\node_modules" (
     echo   U-Claw already installed at: %INSTALL_DIR%
     echo.
     echo   [1] Launch directly (skip extract)
@@ -33,7 +33,7 @@ if exist "%INSTALL_DIR%\openclaw\node_modules" (
     if "%choice%"=="2" (
         echo.
         echo   Reinstalling...
-        rmdir /s /q "%INSTALL_DIR%" >nul 2>&1
+        rmdir /s /q "%INSTALL_DIR%" >/dev/null 2>&1
     ) else (
         echo.
         echo   Launching...
@@ -47,7 +47,7 @@ echo   Extracting U-Claw to %INSTALL_DIR% ...
 echo   This may take 1-2 minutes...
 echo.
 
-where tar >nul 2>&1
+where tar >/dev/null 2>&1
 if %errorlevel%==0 (
     cd /d "%USERPROFILE%"
     tar xzf "%ARCHIVE%"
@@ -62,7 +62,7 @@ if %errorlevel%==0 (
     echo   Please extract U-Claw.tar.gz manually using 7-Zip or WinRAR
     echo   Extract to: %USERPROFILE%
     echo.
-    echo   Then run: %INSTALL_DIR%\Windows-从U盘启动.bat
+    echo   Then run: %INSTALL_DIR%\Windows-Start.bat
     pause
     exit /b 1
 )
@@ -76,4 +76,4 @@ echo   Starting OpenClaw...
 echo.
 
 cd /d "%INSTALL_DIR%"
-call "%INSTALL_DIR%\Windows-从U盘启动.bat"
+call "%INSTALL_DIR%\Windows-Start.bat"
