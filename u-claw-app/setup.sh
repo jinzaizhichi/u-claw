@@ -155,10 +155,12 @@ echo -e "  产出在 ${BOLD}release/${NC} 目录"
 echo ""
 
 # Ask if user wants to run now
-read -p "  现在启动开发版？(y/n): " -n 1 RUN
-echo ""
-if [ "$RUN" = "y" ] || [ "$RUN" = "Y" ]; then
+if [ -t 0 ]; then
+    read -p "  现在启动开发版？(y/n): " -n 1 RUN
     echo ""
-    echo -e "  ${CYAN}启动 U-Claw...${NC}"
-    npm run dev
+    if [ "$RUN" = "y" ] || [ "$RUN" = "Y" ]; then
+        echo ""
+        echo -e "  ${CYAN}启动 U-Claw...${NC}"
+        npm run dev
+    fi
 fi
