@@ -1,5 +1,5 @@
 ﻿@echo off
-chcp 65001 >/dev/null 2>&1
+chcp 65001 >nul 2>&1
 title U-Claw - Portable AI Agent
 
 echo.
@@ -12,13 +12,14 @@ set "UCLAW_DIR=%~dp0"
 set "APP_DIR=%UCLAW_DIR%app"
 set "CORE_DIR=%APP_DIR%\core"
 set "DATA_DIR=%UCLAW_DIR%data"
+set "STATE_DIR=%DATA_DIR%\.openclaw"
 set "NODE_DIR=%APP_DIR%\runtime\node-win-x64"
 set "NODE_BIN=%NODE_DIR%\node.exe"
 set "NPM_BIN=%NODE_DIR%\npm.cmd"
 
 set "OPENCLAW_HOME=%DATA_DIR%"
-set "OPENCLAW_STATE_DIR=%DATA_DIR%"
-set "OPENCLAW_CONFIG_PATH=%DATA_DIR%\config.json"
+set "OPENCLAW_STATE_DIR=%STATE_DIR%"
+set "OPENCLAW_CONFIG_PATH=%STATE_DIR%\openclaw.json"
 
 REM Check runtime
 if not exist "%NODE_BIN%" (
@@ -36,13 +37,14 @@ set "PATH=%NODE_DIR%;%NODE_DIR%\node_modules\.bin;%PATH%"
 
 REM Init data
 if not exist "%DATA_DIR%" mkdir "%DATA_DIR%"
+if not exist "%STATE_DIR%" mkdir "%STATE_DIR%"
 if not exist "%DATA_DIR%\memory" mkdir "%DATA_DIR%\memory"
 if not exist "%DATA_DIR%\backups" mkdir "%DATA_DIR%\backups"
 
 REM Default config
-if not exist "%DATA_DIR%\config.json" (
+if not exist "%STATE_DIR%\openclaw.json" (
     echo   First run - creating default config...
-    echo {"gateway":{"mode":"local","auth":{"token":"uclaw"}}} > "%DATA_DIR%\config.json"
+    echo {"gateway":{"mode":"local","auth":{"token":"uclaw"}}} > "%STATE_DIR%\openclaw.json"
     echo   Config created
     echo.
 )
@@ -64,7 +66,7 @@ REM OpenClaw doesn't need a separate build step when installed via npm
 REM Find available port
 set PORT=18789
 :check_port
-netstat -an | findstr ":%PORT% " | findstr "LISTENING" >/dev/null 2>&1
+netstat -an | findstr ":%PORT% " | findstr "LISTENING" >nul 2>&1
 if %errorlevel%==0 (
     echo   Port %PORT% in use, trying next...
     set /a PORT+=1
@@ -84,8 +86,8 @@ cd /d "%CORE_DIR%"
 
 REM Check if model is configured - open Config.html for first time, dashboard for returning users
 set "HAS_MODEL=no"
-if exist "%DATA_DIR%\config.json" (
-    findstr /c:"agent" "%DATA_DIR%\config.json" >nul 2>&1 && set "HAS_MODEL=yes"
+if exist "%STATE_DIR%\openclaw.json" (
+    findstr /c:"agent" "%STATE_DIR%\openclaw.json" >nul 2>&1 && set "HAS_MODEL=yes"
 )
 
 if "%HAS_MODEL%"=="yes" (

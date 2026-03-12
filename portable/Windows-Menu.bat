@@ -1,5 +1,5 @@
 ﻿@echo off
-chcp 65001 >/dev/null 2>&1
+chcp 65001 >nul 2>&1
 title U-Claw Menu
 
 set "UCLAW_DIR=%~dp0"
@@ -86,7 +86,7 @@ echo.
 echo   Starting gateway...
 set PORT=18789
 :find_port
-netstat -an | findstr ":%PORT% " | findstr "LISTENING" >/dev/null 2>&1
+netstat -an | findstr ":%PORT% " | findstr "LISTENING" >nul 2>&1
 if %errorlevel%==0 (
     set /a PORT+=1
     if %PORT% gtr 18799 (echo No available port & pause & goto :menu)
@@ -154,7 +154,7 @@ set "TS=%TS: =0%"
 set "BK=%DATA_DIR%\backups\backup_%TS%"
 mkdir "%BK%" 2>nul
 if exist "%STATE_DIR%\openclaw.json" copy "%STATE_DIR%\openclaw.json" "%BK%\" >nul
-if exist "%DATA_DIR%\memory" xcopy /s /q "%DATA_DIR%\memory" "%BK%\memory\" >/dev/null 2>nul
+if exist "%DATA_DIR%\memory" xcopy /s /q "%DATA_DIR%\memory" "%BK%\memory\" >nul 2>nul
 echo   Backup saved: %BK%
 pause
 goto :menu
