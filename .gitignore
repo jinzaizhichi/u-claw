@@ -1,25 +1,34 @@
-# U-Claw build output bundle (generated release artifact)
-U-Claw/
-U-Claw-v2/
+# ── Runtime dependencies (too large for git, download on build) ──
+portable/app/
+portable/data/
+u-claw-app/node_modules/
+u-claw-app/release/
 
-# Toolkit (engineer DIY package, local only)
-Toolkit/
-
-# Marketing assets
+# ── Non-dev assets (stored locally, not in repo) ──
+archive/
+reference/
+releases/
+toolkit/
 marketing/
-marketing.zip
 social-assets/
 
-# OpenClaw source (users download separately)
+# ── Build cache & temp ──
+.download-cache/
+*.dmg
+*.exe
+*.blockmap
+builder-debug.yml
+
+# ── OpenClaw source downloads ──
 openclaw-2026.3.7/
 openclaw-2026.3.7.zip
 
-# Build cache
-.download-cache/
-
-# OS files
+# ── OS files ──
 .DS_Store
 Thumbs.db
 
-# Claude
+# ── Claude workspace ──
 .claude/
+
+# ── u-claw-app runtime binaries (download on build) ──
+u-claw-app/resources/runtime/

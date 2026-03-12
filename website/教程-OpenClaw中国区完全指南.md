@@ -59,61 +59,244 @@ OpenClaw 是一个**开源 AI 助手框架**，你可以把它理解为：
 
 安装后在终端输入 `openclaw` 或 `uclaw` 即可启动。
 
-### 方式二：手动安装（需要翻墙）
+### 方式二：在线安装（需联网，无需 U 盘）
+
+> 💡 国内用户全程可用镜像加速，大部分情况**无需翻墙**。
+
+#### 第一步：安装 Node.js 22+
+
+OpenClaw 需要 Node.js v22 或以上版本。国内有多种方式安装：
+
+**方法 A：官网直接下载（最简单）**
+
+- Node.js 中文网：https://nodejs.cn/download/ （国内直连，速度快）
+- 官方下载页：https://nodejs.org/en/download （海外源，可能较慢）
+
+下载 `.pkg`（Mac）或 `.msi`（Windows）安装包，双击安装即可。
+
+**方法 B：使用 nvm 版本管理器（推荐开发者）**
 
 ```bash
-# 安装 Node.js 22+
-# 方法1: 官网下载 https://nodejs.org
-# 方法2: 使用 nvm
-curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.0/install.sh | bash
-nvm install 22
+# 1. 安装 nvm
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.0/install.sh | bash
 
-# 安装 OpenClaw（使用淘宝镜像）
+# 2. 设置 Node.js 国内镜像（⚠️ 关键！否则下载很慢）
+export NVM_NODEJS_ORG_MIRROR=https://npmmirror.com/mirrors/node
+# 永久生效：写入 ~/.bashrc 或 ~/.zshrc
+echo 'export NVM_NODEJS_ORG_MIRROR=https://npmmirror.com/mirrors/node' >> ~/.zshrc
+
+# 3. 安装 Node.js 22
+nvm install 22
+nvm use 22
+
+# 4. 验证
+node -v   # 应显示 v22.x.x
+```
+
+**方法 C：使用 fnm（更快的版本管理器，基于 Rust）**
+
+```bash
+# 1. 安装 fnm
+# Mac/Linux:
+curl -fsSL https://fnm.vercel.app/install | bash
+# Windows (PowerShell):
+winget install Schniz.fnm
+
+# 2. 设置国内镜像
+export FNM_NODE_DIST_MIRROR=https://npmmirror.com/mirrors/node
+# 永久生效：
+echo 'export FNM_NODE_DIST_MIRROR=https://npmmirror.com/mirrors/node' >> ~/.zshrc
+
+# 3. 安装 Node.js 22
+fnm install 22
+fnm use 22
+```
+
+#### 第二步：设置 npm 国内镜像源
+
+安装完 Node.js 后，**必须先换镜像源**，否则后续安装 OpenClaw 会超时。
+
+```bash
+# 推荐：淘宝 npmmirror（最稳定，速度最快）
+npm config set registry https://registry.npmmirror.com
+
+# 验证是否设置成功
+npm config get registry
+# 应返回: https://registry.npmmirror.com/
+```
+
+**国内可用的 npm 镜像源一览：**
+
+| 镜像源 | 地址 | 说明 |
+|--------|------|------|
+| **淘宝 npmmirror** | `https://registry.npmmirror.com` | ⭐ 首选，最快最稳 |
+| 腾讯云 | `https://mirrors.cloud.tencent.com/npm/` | 腾讯云加速 |
+| 华为云 | `https://mirrors.huaweicloud.com/repository/npm/` | 华为云加速 |
+| 阿里云 | `https://npm.aliyun.com` | 阿里云加速 |
+| 中科大 | `https://mirrors.ustc.edu.cn/` | 高校镜像 |
+| 清华大学 | `https://mirrors.tuna.tsinghua.edu.cn/` | 高校镜像 |
+
+> ⚠️ 旧域名 `registry.npm.taobao.org` 已于 2024 年 1 月停止服务，请务必使用新域名 `registry.npmmirror.com`。
+
+**快速切换镜像源的方法：**
+
+```bash
+# 方法 1：直接设置（推荐）
+npm config set registry https://registry.npmmirror.com
+
+# 方法 2：安装 nrm 镜像源管理工具
+npm install -g nrm
+nrm ls          # 查看所有可用镜像源
+nrm use taobao  # 一键切换淘宝源
+nrm test        # 测速，看哪个最快
+
+# 方法 3：单次使用（不改全局配置）
+npm install -g openclaw@latest --registry=https://registry.npmmirror.com
+```
+
+#### 第三步：安装 OpenClaw
+
+```bash
+# 安装 OpenClaw（全局安装）
+npm install -g openclaw@latest
+
+# 如果上面超时，手动指定镜像：
 npm install -g openclaw@latest --registry=https://registry.npmmirror.com
 
-# 启动引导
+# 验证安装
+openclaw --version
+```
+
+#### 第四步：启动配置向导
+
+```bash
+# 启动引导向导 + 安装后台守护进程（推荐）
 openclaw onboard --install-daemon
+
+# 或只启动引导向导
+openclaw onboard
 ```
 
 ---
 
-## 3. 首次配置
+## 3. 首次配置向导（详细）
 
-安装完成后，运行 `openclaw`，会进入引导向导：
+> 参考：[hello-claw 教程](https://datawhalechina.github.io/hello-claw/cn/adopt/chapter2/)、[菜鸟教程 OpenClaw 配置](https://www.runoob.com/ai-agent/openclaw-setup.html)、[openclaw-docs](https://github.com/yeuxuan/openclaw-docs)
 
-### 3.1 选择 AI 模型提供商
+安装完成后，运行 `openclaw` 或 `openclaw onboard`，会自动进入交互式引导向导。首次用户推荐选择 **QuickStart 模式**（最小配置，最快上手）。
+
+### 3.1 选择配置模式
+
+```
+? Choose setup mode:
+  > QuickStart     ← 推荐首次用户，跳过非必要配置
+    Full Setup     ← 完整配置，逐项设置
+    Import         ← 从已有配置文件导入
+```
+
+### 3.2 选择 AI 模型提供商
 
 ```
 ? Select your AI provider:
-  > DeepSeek        ← 国内推荐
-    Moonshot (Kimi)
-    Qwen
+  > DeepSeek        ← 国内推荐，便宜好用
+    Moonshot (Kimi) ← 256K 长上下文
+    Qwen            ← 免费额度大
     Anthropic (Claude)
     OpenAI (GPT)
+    Custom/Relay    ← 自定义 API 地址（中转站、OpenRouter 等）
     ...
 ```
 
-### 3.2 输入 API Key
+> 💡 **国内用户建议先选 DeepSeek**，注册即送免费额度，API 无需翻墙。
 
-每个模型都需要一个 API Key，去对应平台注册获取（下一章详细说明）。
+### 3.3 输入 API Key
 
-### 3.3 选择聊天平台
+每个模型都需要一个 API Key，去对应平台注册获取：
+
+| 模型 | 注册地址 | 获取方式 |
+|------|----------|----------|
+| DeepSeek | https://platform.deepseek.com/ | 注册 → API Keys → 创建 |
+| Kimi | https://platform.moonshot.cn/ | 注册 → 开发者 → 创建密钥 |
+| Qwen | https://dashscope.console.aliyun.com/ | 注册阿里云 → 开通 DashScope → 创建 API Key |
+| Claude | https://console.anthropic.com/ | 注册 → API Keys（需海外手机号或信用卡） |
+| OpenAI | https://platform.openai.com/ | 注册 → API Keys（需海外手机号或信用卡） |
+
+```
+? Enter your API key:
+  sk-xxxxxxxxxxxxxxxxxxxxxxxx
+
+? Enter API base URL (press Enter for default):
+  https://api.deepseek.com/v1    ← DeepSeek 用户填这个
+  https://api.moonshot.cn/v1     ← Kimi 用户填这个
+  (留空)                          ← OpenAI/Claude 用默认值
+```
+
+> 💡 **用中转站/代理平台的用户**：选择 `Custom/Relay`，填入你的中转站地址和 Key。常用中转：OpenRouter (https://openrouter.ai)、API2D 等。
+
+### 3.4 选择聊天平台
 
 ```
 ? Which channels do you want to connect?
-  > Telegram
-    Discord
-    Feishu (飞书)
-    ...
+  > Telegram       ← 需翻墙
+    Discord        ← 需翻墙
+    Feishu (飞书)  ← 国内企业推荐
+    QQ Bot         ← 国内首选，无需翻墙
+    WhatsApp
+    Slack
+    (Skip for now) ← 可以之后再配置
 ```
 
-### 3.4 安装守护进程
+> 💡 **可以先跳过**，之后随时通过 `openclaw configure` 或启动菜单添加。
+
+### 3.5 安装守护进程（后台运行）
 
 ```
 ? Install as background service? (Y/n)
 ```
 
-选 Y，OpenClaw 会在后台持续运行。
+选 **Y**，OpenClaw 会安装为系统守护进程，开机自启、后台运行。选 N 则每次需手动启动。
+
+### 3.6 配置完成
+
+向导完成后：
+- 配置文件保存在 `~/.openclaw/openclaw.json`
+- Gateway 自动启动，默认端口 **18789**
+- 浏览器自动打开控制台 http://127.0.0.1:18789
+
+```bash
+# 常用管理命令
+openclaw gateway status    # 查看运行状态
+openclaw gateway restart   # 重启网关
+openclaw gateway stop      # 停止网关
+openclaw configure         # 重新进入配置向导
+openclaw doctor --repair   # 诊断修复
+```
+
+### 3.7 配置文件说明
+
+配置文件位于 `~/.openclaw/openclaw.json`，支持热重载（修改后自动生效，无需重启）：
+
+```json
+{
+  "gateway": {
+    "mode": "local",
+    "port": 18789,
+    "bind": "127.0.0.1",
+    "auth": {
+      "token": "你的Token"
+    }
+  },
+  "models": {
+    "default": "deepseek-v3"
+  },
+  "channels": {
+    "telegram": { "token": "xxx" },
+    "qqbot": { "appId": "xxx", "appSecret": "xxx" }
+  }
+}
+```
+
+> 💡 **U-Claw 用户**：如果你是通过 U-Claw 安装的，配置文件在 `U-Claw/data/.openclaw/openclaw.json`，首次配置通过浏览器打开的 Config.html 页面完成，更加直观。
 
 ---
 
