@@ -35,14 +35,14 @@ if exist "%NODE_BIN%" (
     set /a ERROR_COUNT+=1
 )
 
-REM 2. Check core-win directory
+REM 2. Check core directory
 echo [2/6] 检查 Windows 依赖目录...
-set "CORE_DIR=%UCLAW_DIR%app\core-win"
+set "CORE_DIR=%UCLAW_DIR%app\core"
 if exist "%CORE_DIR%" (
-    echo   [OK] core-win directory exists >> "%LOG_FILE%"
+    echo   [OK] core directory exists >> "%LOG_FILE%"
     echo   ✓ Windows 依赖目录: 正常
 ) else (
-    echo   [ERROR] core-win directory not found >> "%LOG_FILE%"
+    echo   [ERROR] core directory not found >> "%LOG_FILE%"
     echo   ✗ Windows 依赖目录: 缺失
     set /a ERROR_COUNT+=1
 )

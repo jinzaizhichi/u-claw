@@ -6,9 +6,13 @@
 
 UCLAW_DIR="$(cd "$(dirname "$0")" && pwd)"
 APP_DIR="$UCLAW_DIR/app"
-CORE_DIR="$APP_DIR/core-mac"
+CORE_DIR="$APP_DIR/core"
 DATA_DIR="$UCLAW_DIR/data"
-SYSTEM_DIR="$UCLAW_DIR/system"
+
+# Migration shim: rename old core-mac to core for existing USB users
+if [ -d "$APP_DIR/core-mac" ] && [ ! -d "$APP_DIR/core" ]; then
+    mv "$APP_DIR/core-mac" "$APP_DIR/core"
+fi
 
 GREEN='\033[0;32m'
 CYAN='\033[0;36m'
@@ -93,12 +97,7 @@ export OPENCLAW_HOME="$DATA_DIR"
 export OPENCLAW_STATE_DIR="$STATE_DIR"
 export OPENCLAW_CONFIG_PATH="$STATE_DIR/openclaw.json"
 
-# ---- 6. Run migration if exists ----
-if [ -f "$SYSTEM_DIR/migrate.js" ]; then
-    "$NODE_BIN" "$SYSTEM_DIR/migrate.js" "$DATA_DIR" 2>/dev/null || true
-fi
-
-# ---- 7. Check dependencies ----
+# ---- 6. Check dependencies ----
 if [ ! -d "$CORE_DIR/node_modules" ]; then
     echo -e "  ${YELLOW}First run - installing dependencies...${NC}"
     echo "  (Using China mirror)"
@@ -110,7 +109,7 @@ fi
 
 # OpenClaw doesn't need a separate build step when installed via npm
 
-# ---- 8. Find available port ----
+# ---- 7. Find available port ----
 PORT=18789
 while lsof -i :$PORT >/dev/null 2>&1; do
     echo -e "  ${YELLOW}Port $PORT in use, trying next...${NC}"
@@ -134,7 +133,7 @@ if [ $PORT -ne 18789 ]; then
     " 2>/dev/null || true
 fi
 
-# ---- 9. Start gateway ----
+# ---- 8. Start gateway ----
 echo -e "  ${CYAN}Starting OpenClaw on port $PORT...${NC}"
 echo "  Do NOT close this window."
 echo ""
@@ -148,7 +147,7 @@ GW_LOG="$DATA_DIR/logs/gateway.log"
 "$NODE_BIN" "$OPENCLAW_MJS" gateway run --allow-unconfigured --force --port $PORT 2>&1 | tee -a "$GW_LOG" &
 GW_PID=$!
 
-# ---- 10. Wait & open browser ----
+# ---- 9. Wait & open browser ----
 for i in $(seq 1 30); do
     sleep 0.5
     if curl -s -o /dev/null -w '' "http://127.0.0.1:$PORT/" 2>/dev/null; then

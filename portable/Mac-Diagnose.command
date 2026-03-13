@@ -49,15 +49,15 @@ else
     echo -e "  ${RED}✗${NC} Node.js: NOT FOUND"
 fi
 
-# 2. Check core-mac directory
-echo "[2/6] Checking core-mac directory..."
-CORE_DIR="$UCLAW_DIR/app/core-mac"
+# 2. Check core directory
+echo "[2/6] Checking core directory..."
+CORE_DIR="$UCLAW_DIR/app/core"
 if [ -d "$CORE_DIR" ]; then
-    echo "  [OK] core-mac directory exists" >> "$LOG_FILE"
-    echo -e "  ${GREEN}✓${NC} core-mac: Found"
+    echo "  [OK] core directory exists" >> "$LOG_FILE"
+    echo -e "  ${GREEN}✓${NC} core: Found"
 else
-    echo "  [ERROR] core-mac directory not found" >> "$LOG_FILE"
-    echo -e "  ${RED}✗${NC} core-mac: NOT FOUND"
+    echo "  [ERROR] core directory not found" >> "$LOG_FILE"
+    echo -e "  ${RED}✗${NC} core: NOT FOUND"
 fi
 
 # 3. Check node_modules

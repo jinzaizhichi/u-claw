@@ -19,15 +19,6 @@
 
 代码库本身就是 U 盘的文件骨架，运行 `setup.sh` 补齐大依赖后，整个 `portable/` 目录直接拷贝到 U 盘即可。
 
-### 两种 U 盘模式
-
-| | 便携版 U 盘 | Linux 启动盘 |
-|---|---|---|
-| **原理** | 在已有系统（Mac/Win/Linux）上运行 U 盘里的脚本 | 从 U 盘启动整个 Linux 系统 + OpenClaw |
-| **U 盘要求** | 4GB+ | **64GB+ USB 3.0**（USB 2.0 太慢不推荐） |
-| **依赖** | 电脑已有操作系统 | 不依赖任何已装系统 |
-| **适合** | 临时用、公共电脑、演示 | 专用 AI 工作站、无系统裸机 |
-
 ### 快速开始：制作便携版 U 盘
 
 ```bash
@@ -44,34 +35,14 @@ cp -R portable/ /Volumes/你的U盘/U-Claw/   # Mac
 
 **完成！** 插上 U 盘，双击启动脚本就能用。
 
-### 制作 Linux 启动盘
-
-把整个 Linux 系统 + OpenClaw 刻在 U 盘，开机从 USB 启动直接进入 AI 助手桌面。
-
-**准备：**
-- **64GB+ USB 3.0 U 盘**（推荐三星 BAR Plus、闪迪 CZ880 等高速盘）
-- Linux Mint ISO（[清华镜像](https://mirrors.tuna.tsinghua.edu.cn/linuxmint-cd/stable/) / [中科大镜像](https://mirrors.ustc.edu.cn/linuxmint-cd/stable/)）
-- Rufus v4.0+（[rufus.ie](https://rufus.ie/zh/)）
-
-**步骤：**
-1. Rufus 刻录 ISO → 开启 **Persistent Storage**（8-16GB）
-2. USB 启动 → 进入 Linux Mint 桌面 → 连网
-3. 运行安装脚本：
-```bash
-curl -O https://raw.githubusercontent.com/dongsheng123132/u-claw/main/portable/setup-linux-usb.sh
-bash setup-linux-usb.sh
-```
-
-详细图文教程见 [guide.html → Linux 启动盘模式](https://u-claw.org/guide.html)。
-
 ### U 盘功能一览
 
-| 功能 | Mac | Windows | Linux |
-|------|-----|---------|-------|
-| **免安装运行** | `Mac-Start.command` | `Windows-Start.bat` | `bash Linux-Start.sh` |
-| **功能菜单** | `Mac-Menu.command` | `Windows-Menu.bat` | `bash Linux-Menu.sh` |
-| **安装到电脑** | `Mac-Install.command` | `Windows-Install.bat` | `bash Linux-Install.sh` |
-| **首次配置** | `Config.html` | `Config.html` | `Config.html` |
+| 功能 | Mac | Windows |
+|------|-----|---------|
+| **免安装运行** | `Mac-Start.command` | `Windows-Start.bat` |
+| **功能菜单** | `Mac-Menu.command` | `Windows-Menu.bat` |
+| **安装到电脑** | `Mac-Install.command` | `Windows-Install.bat` |
+| **首次配置** | `Config.html` | `Config.html` |
 
 ### U 盘文件结构
 
@@ -83,18 +54,14 @@ U-Claw/                          ← 整个拷到 U 盘
 ├── Windows-Start.bat             Windows 免安装运行
 ├── Windows-Menu.bat              Windows 功能菜单
 ├── Windows-Install.bat           安装到 Windows
-├── Linux-Start.sh                Linux 免安装运行
-├── Linux-Menu.sh                 Linux 功能菜单
-├── Linux-Install.sh              安装到 Linux
-├── setup-linux-usb.sh            Linux 启动盘内安装 OpenClaw
 ├── Config.html                   首次配置页面
 ├── setup.sh                      补齐依赖（开发者用）
 ├── app/                          ← 大依赖（setup.sh 下载，不进 git）
 │   ├── core/                        OpenClaw + QQ 插件
 │   └── runtime/
 │       ├── node-mac-arm64/          Mac Apple Silicon
-│       ├── node-win-x64/           Windows 64-bit
-│       └── node-linux-x64/         Linux x86_64
+│       ├── node-mac-x64/           Mac Intel
+│       └── node-win-x64/           Windows 64-bit
 └── data/                         ← 用户数据（不进 git）
     ├── .openclaw/                   配置文件
     ├── memory/                      AI 记忆
@@ -155,7 +122,6 @@ npm run build:win        # 打包 → release/*.exe
 git clone https://github.com/dongsheng123132/u-claw.git
 cd u-claw/portable && bash setup.sh
 bash Mac-Start.command   # Mac 测试
-bash Linux-Start.sh      # Linux 测试
 ```
 
 **平台支持：**
@@ -163,12 +129,10 @@ bash Linux-Start.sh      # Linux 测试
 | 平台 | 状态 |
 |------|------|
 | Mac Apple Silicon (M1-M4) | ✅ |
-| Linux x86_64 | ✅ |
-| Linux ARM64 | ✅ |
+| Mac Intel (x64) | ✅ |
 | Windows x64 | 🚧 开发中 |
-| Mac Intel | ❌ 暂不支持 |
 
-欢迎 PR！特别需要：Windows 脚本完善、新平台支持、教程翻译。
+欢迎 PR！特别需要：Windows 脚本完善、教程翻译。
 
 ### FAQ
 
@@ -176,7 +140,7 @@ bash Linux-Start.sh      # Linux 测试
 不需要。安装和运行全程使用国内镜像，国产模型 API 直连。
 
 **Q: U 盘需要多大？**
-便携版 4GB+（完整约 2.3GB）。Linux 启动盘 64GB+ USB 3.0。
+4GB+（完整约 2.3GB）。
 
 **Q: 能分发吗？**
 MIT 协议，随便复制分发。
@@ -202,15 +166,6 @@ This repo is a **tutorial + complete source code** for building an [OpenClaw](ht
 
 The codebase itself is the USB file skeleton. Run `setup.sh` to download large dependencies, then copy the entire `portable/` directory to a USB drive.
 
-### Two USB modes
-
-| | Portable USB | Linux Live USB |
-|---|---|---|
-| **How it works** | Runs scripts from USB on existing OS (Mac/Win/Linux) | Boots entire Linux system + OpenClaw from USB |
-| **USB requirement** | 4GB+ | **64GB+ USB 3.0** (USB 2.0 too slow) |
-| **Depends on** | Existing OS on computer | Nothing — boots independently |
-| **Best for** | Temporary use, public computers, demos | Dedicated AI workstation, bare metal |
-
 ### Quick Start: Build a Portable USB
 
 ```bash
@@ -222,62 +177,38 @@ cd u-claw/portable && bash setup.sh
 
 # 3. Copy to USB drive
 cp -R portable/ /Volumes/YOUR_USB/U-Claw/   # Mac
-# Or drag & drop on Windows/Linux
+# Or drag & drop on Windows
 ```
 
 **Done!** Plug in the USB, double-click the start script, and you're running AI.
 
-### Build a Linux Live USB
-
-Boot an entire Linux system + OpenClaw directly from USB — no existing OS required.
-
-**You need:**
-- **64GB+ USB 3.0 drive** (recommended: Samsung BAR Plus, SanDisk Extreme)
-- Linux Mint ISO ([linuxmint.com](https://linuxmint.com/download.php))
-- Rufus v4.0+ ([rufus.ie](https://rufus.ie/en/))
-
-**Steps:**
-1. Flash ISO with Rufus → enable **Persistent Storage** (8-16GB)
-2. Boot from USB → enter Linux Mint desktop → connect to internet
-3. Run the install script:
-```bash
-curl -O https://raw.githubusercontent.com/dongsheng123132/u-claw/main/portable/setup-linux-usb.sh
-bash setup-linux-usb.sh
-```
-
-Full guide at [guide.html → Linux Live USB](https://u-claw.org/guide.html).
-
 ### USB Features
 
-| Feature | Mac | Windows | Linux |
-|---------|-----|---------|-------|
-| **Run (no install)** | `Mac-Start.command` | `Windows-Start.bat` | `bash Linux-Start.sh` |
-| **Menu** | `Mac-Menu.command` | `Windows-Menu.bat` | `bash Linux-Menu.sh` |
-| **Install to PC** | `Mac-Install.command` | `Windows-Install.bat` | `bash Linux-Install.sh` |
-| **First-time config** | `Config.html` | `Config.html` | `Config.html` |
+| Feature | Mac | Windows |
+|---------|-----|---------|
+| **Run (no install)** | `Mac-Start.command` | `Windows-Start.bat` |
+| **Menu** | `Mac-Menu.command` | `Windows-Menu.bat` |
+| **Install to PC** | `Mac-Install.command` | `Windows-Install.bat` |
+| **First-time config** | `Config.html` | `Config.html` |
 
 ### File Structure
 
 ```
 U-Claw/                          ← Copy entire folder to USB
 ├── Mac-Start.command             Mac launcher
-├── Mac-Menu.command              Mac menu (8 options)
+├── Mac-Menu.command              Mac menu
 ├── Mac-Install.command           Install to Mac
 ├── Windows-Start.bat             Windows launcher
 ├── Windows-Menu.bat              Windows menu
 ├── Windows-Install.bat           Install to Windows
-├── Linux-Start.sh                Linux launcher
-├── Linux-Menu.sh                 Linux menu
-├── Linux-Install.sh              Install to Linux
-├── setup-linux-usb.sh            Install OpenClaw in Linux live USB
 ├── Config.html                   First-time config page
 ├── setup.sh                      Download dependencies (dev use)
 ├── app/                          ← Large deps (downloaded by setup.sh, not in git)
 │   ├── core/                        OpenClaw + QQ plugin
 │   └── runtime/
 │       ├── node-mac-arm64/          Mac Apple Silicon
-│       ├── node-win-x64/           Windows 64-bit
-│       └── node-linux-x64/         Linux x86_64
+│       ├── node-mac-x64/           Mac Intel
+│       └── node-win-x64/           Windows 64-bit
 └── data/                         ← User data (not in git)
     ├── .openclaw/                   Config file
     ├── memory/                      AI memory
@@ -336,7 +267,6 @@ All scripts use China mirrors by default — no VPN needed:
 git clone https://github.com/dongsheng123132/u-claw.git
 cd u-claw/portable && bash setup.sh
 bash Mac-Start.command   # Test on Mac
-bash Linux-Start.sh      # Test on Linux
 ```
 
 **Platform Support:**
@@ -344,12 +274,10 @@ bash Linux-Start.sh      # Test on Linux
 | Platform | Status |
 |----------|--------|
 | Mac Apple Silicon (M1-M4) | ✅ |
-| Linux x86_64 | ✅ |
-| Linux ARM64 | ✅ |
+| Mac Intel (x64) | ✅ |
 | Windows x64 | 🚧 In progress |
-| Mac Intel | ❌ Not yet |
 
-PRs welcome! Especially: Windows scripts, new platform support, documentation.
+PRs welcome! Especially: Windows scripts, documentation.
 
 ### FAQ
 
@@ -357,7 +285,7 @@ PRs welcome! Especially: Windows scripts, new platform support, documentation.
 No. All downloads use China mirrors. Chinese AI model APIs work directly.
 
 **Q: How big should the USB drive be?**
-Portable mode: 4GB+ (~2.3GB full). Linux live USB: 64GB+ USB 3.0.
+4GB+ (~2.3GB full).
 
 **Q: Can I redistribute?**
 MIT license — copy and share freely.

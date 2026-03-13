@@ -3,7 +3,12 @@ chcp 65001 >nul 2>&1
 title U-Claw Menu
 
 set "UCLAW_DIR=%~dp0"
-set "CORE_DIR=%UCLAW_DIR%app\core-win"
+set "APP_DIR=%UCLAW_DIR%app"
+
+REM Migration shim: rename old core-win to core for existing USB users
+if exist "%APP_DIR%\core-win" if not exist "%APP_DIR%\core" ren "%APP_DIR%\core-win" core
+
+set "CORE_DIR=%APP_DIR%\core"
 set "DATA_DIR=%UCLAW_DIR%data"
 set "STATE_DIR=%DATA_DIR%\.openclaw"
 set "NODE_DIR=%UCLAW_DIR%app\runtime\node-win-x64"

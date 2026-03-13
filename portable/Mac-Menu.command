@@ -4,7 +4,7 @@
 
 UCLAW_DIR="$(cd "$(dirname "$0")" && pwd)"
 APP_DIR="$UCLAW_DIR/app"
-CORE_DIR="$APP_DIR/core-mac"
+CORE_DIR="$APP_DIR/core"
 DATA_DIR="$UCLAW_DIR/data"
 STATE_DIR="$DATA_DIR/.openclaw"
 CONFIG_PATH="$STATE_DIR/openclaw.json"
@@ -18,8 +18,13 @@ NC='\033[0m'
 BOLD='\033[1m'
 DIM='\033[2m'
 
-# Node.js (ARM64 only)
-NODE_DIR="$APP_DIR/runtime/node-mac-arm64"
+# Node.js — detect architecture
+ARCH=$(uname -m)
+if [ "$ARCH" = "arm64" ]; then
+    NODE_DIR="$APP_DIR/runtime/node-mac-arm64"
+else
+    NODE_DIR="$APP_DIR/runtime/node-mac-x64"
+fi
 NODE_BIN="$NODE_DIR/bin/node"
 NPM_BIN="$NODE_DIR/bin/npm"
 export PATH="$NODE_DIR/bin:$PATH"

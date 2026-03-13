@@ -1,6 +1,6 @@
 #!/bin/bash
 # ============================================================
-# U-Claw Maintenance Functions (shared by Mac & Linux menus)
+# U-Claw Maintenance Functions (shared by Mac menus)
 # Requires caller to set: $UCLAW_DIR, $DATA_DIR, $STATE_DIR,
 #   $CONFIG_PATH, $NODE_BIN, $NPM_BIN, $CORE_DIR,
 #   color vars ($RED $GREEN $YELLOW $CYAN $WHITE $NC $BOLD $DIM),
@@ -275,11 +275,7 @@ do_uninstall() {
             fi
             echo ""
             echo "  Electron 桌面版卸载:"
-            if [ "$(uname)" = "Darwin" ]; then
-                echo "    macOS: 将 U-Claw.app 从「应用程序」拖到废纸篓"
-            else
-                echo "    Linux: sudo apt remove u-claw 或 rm ~/.local/share/applications/u-claw.desktop"
-            fi
+            echo "    macOS: 将 U-Claw.app 从「应用程序」拖到废纸篓"
             ;;
     esac
 }

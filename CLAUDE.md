@@ -88,7 +88,6 @@ Release artifacts go to GitHub Releases, not the repo.
 ## Platform Support Status
 
 - Mac Apple Silicon (ARM64): ✅ Working
-- Windows x64: 🚧 In development
-- Linux x86_64: ✅ Working (scripts + live USB mode)
-- Linux ARM64: ✅ Working (scripts)
 - Mac Intel (x64): ✅ Working（portable 需先运行 setup.sh 下载 node-mac-x64）
+- Windows x64: 🚧 In development
+- Linux: 不提供脚本，后续只提供教程
