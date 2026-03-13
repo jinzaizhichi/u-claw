@@ -103,7 +103,7 @@ ul{padding-left:20px}
         <a class="nav-item" href="#" data-page="mirrors">国内镜像源</a>
         <a class="nav-item" href="#" data-page="onboard">首次配置向导</a>
         <a class="nav-item" href="#" data-page="dashboard">网页控制台</a>
-        <a class="nav-item" href="#" data-page="linux-usb">Linux 启动盘模式</a>
+        <a class="nav-item" href="#" data-page="linux-usb">Linux 启动盘模式（参考）</a>
         <a class="nav-item" href="#" data-page="china-install">中国区原生安装教程</a>
       </div>
     </div>
@@ -187,7 +187,7 @@ ul{padding-left:20px}
 <tr><td>🇨🇳 <strong>全中文界面</strong></td><td>CLI、控制台、配置向导全部中文化</td></tr>
 <tr><td>💾 <strong>便携模式</strong></td><td>配置保存在 U 盘，换电脑继续用</td></tr>
 <tr><td>📦 <strong>完全离线安装</strong></td><td>不需要联网下载依赖</td></tr>
-<tr><td>🖥️ <strong>跨平台</strong></td><td>Windows / macOS / Linux 全支持</td></tr>
+<tr><td>🖥️ <strong>跨平台</strong></td><td>Windows / macOS 全支持</td></tr>
 <tr><td>💬 <strong>20+ 聊天平台</strong></td><td>QQ、飞书、钉钉、企业微信、Telegram...</td></tr>
 <tr><td>🎯 <strong>52 个预装技能</strong></td><td>编程、搜索、翻译、文件管理等</td></tr>
 </table>
@@ -203,7 +203,7 @@ ul{padding-left:20px}
 <table><tr><th>系统</th><th>双击打开</th></tr>
 <tr><td>macOS</td><td><code>Mac-Start.command</code></td></tr>
 <tr><td>Windows</td><td><code>Windows-Start.bat</code></td></tr>
-<tr><td>Linux</td><td><code>bash Linux-Start.sh</code></td></tr></table>
+</table>
 </div></div>
 <div class="step"><div class="step-num">3</div><div class="step-content"><strong>首次配置</strong><p style="color:var(--dim)">浏览器自动打开 Config.html → 选择 AI 模型 → 填写 API Key</p></div></div>
 <div class="step"><div class="step-num">4</div><div class="step-content"><strong>开始使用</strong><p style="color:var(--dim)">控制台自动打开 <code>http://127.0.0.1:18789</code></p></div></div>
@@ -229,7 +229,6 @@ cd u-claw/u-claw-app && bash setup.sh</code></pre>
 <pre><code># 便携版
 bash Mac-Start.command   # Mac
 Windows-Start.bat        # Windows
-bash Linux-Start.sh      # Linux
 
 # 桌面版
 npm run dev</code></pre>
@@ -249,9 +248,6 @@ npm run dev</code></pre>
 <tr><td><code>Mac-Menu.command</code></td><td>macOS 功能菜单（8 项：配置、QQ、备份等）</td></tr>
 <tr><td><code>Windows-Start.bat</code></td><td>Windows 一键启动</td></tr>
 <tr><td><code>Windows-Menu.bat</code></td><td>Windows 功能菜单</td></tr>
-<tr><td><code>Linux-Start.sh</code></td><td>Linux 一键启动（<code>bash Linux-Start.sh</code>）</td></tr>
-<tr><td><code>Linux-Menu.sh</code></td><td>Linux 功能菜单（8 项：配置、QQ、备份等）</td></tr>
-<tr><td><code>Linux-Install.sh</code></td><td>安装到 Linux 电脑</td></tr>
 <tr><td><code>Config.html</code></td><td>首次配置页面（选模型、填 API Key）</td></tr>
 <tr><td><code>U-Claw.html</code></td><td>导航首页</td></tr>
 <tr><td><code>setup.sh</code></td><td>开发者搭建脚本（自动下载运行时）</td></tr>
@@ -264,14 +260,13 @@ npm run dev</code></pre>
 │   └── runtime/
 │       ├── node-mac-arm64/    Mac Apple Silicon
 │       ├── node-win-x64/     Windows 64-bit
-│       └── node-linux-x64/   Linux x86_64
 ├── data/                   ← 用户数据（配置、记忆、备份）
 │   ├── .openclaw/             openclaw.json 配置文件
 │   ├── memory/                AI 记忆
 │   └── backups/               备份
 └── [启动脚本和HTML页面]</code></pre>
 
-<div class="warn"><strong>注意：</strong>目前支持 Mac Apple Silicon (M1-M4) 和 Linux x86_64。Windows 版开发中，Mac Intel 暂不支持。</div>
+<div class="warn"><strong>注意：</strong>目前支持 Mac Apple Silicon (M1-M4)、Mac Intel 和 Windows。</div>
 </div>
 
 <!-- ===== 安装到电脑 ===== -->
@@ -293,7 +288,7 @@ npm run dev</code></pre>
 <pre><code>git clone https://github.com/dongsheng123132/u-claw.git
 cd u-claw/u-claw-app
 
-# Mac / Linux 一键安装（自动下载 Node.js + Electron + 依赖，全部国内镜像）
+# Mac 一键安装（自动下载 Node.js + Electron + 依赖，全部国内镜像）
 bash setup.sh
 
 # Windows 一键安装
@@ -314,14 +309,6 @@ npm run build:win        # Windows → release/U-Claw-x.x.x.exe（需在 Windows
 <tr><td>适合</td><td>临时电脑、公共电脑</td><td>个人电脑长期使用</td></tr>
 </table>
 
-<h2>方法三：从 U 盘安装到 Linux</h2>
-<div class="step"><div class="step-num">1</div><div class="step-content">插入 U-Claw U 盘，打开终端</div></div>
-<div class="step"><div class="step-num">2</div><div class="step-content">运行安装脚本：
-<pre><code>cd /media/$USER/你的U盘/U-Claw
-bash Linux-Install.sh</code></pre>
-<p style="color:var(--dim)">安装到 <code>~/.uclaw/</code>，优先使用 U 盘离线资源，缺失时从国内镜像下载</p>
-</div></div>
-<div class="step"><div class="step-num">3</div><div class="step-content">启动：终端运行 <code>bash ~/.uclaw/start.sh</code> 或在应用菜单搜索 U-Claw</div></div>
 
 <div class="warn"><strong>安全提醒：</strong>共享电脑、公司电脑建议用 U 盘便携模式，不要安装到电脑。</div>
 </div>
@@ -339,7 +326,7 @@ bash Linux-Install.sh</code></pre>
 <tr><td>1</td><td><strong>免安装版</strong>（U盘便携版）</td><td><code>portable/</code></td></tr>
 <tr><td>2</td><td><strong>安装版</strong>（桌面 Electron App）</td><td><code>u-claw-app/</code></td></tr>
 <tr><td>3</td><td><strong>国内环境适配</strong>（镜像、一键脚本）</td><td><code>setup.sh</code> / <code>setup.bat</code></td></tr>
-<tr><td>4</td><td><strong>维护工具</strong>（迁移、备份、诊断）</td><td><code>migrate.js</code>、Menu 脚本</td></tr>
+<tr><td>4</td><td><strong>维护工具</strong>（迁移、备份、诊断）</td><td>Menu 脚本</td></tr>
 <tr><td>5</td><td><strong>文档 + 官网</strong></td><td><code>website/</code></td></tr>
 </table>
 <p style="color:var(--dim)">代码库只包含源代码和脚本（约 4MB），运行时依赖通过 setup.sh 自动下载。</p>
@@ -358,7 +345,7 @@ bash Mac-Start.command   # Mac
 
 <div class="tip"><strong>setup.sh 自动完成：</strong>
 <ol>
-<li>检测系统（Mac ARM64 / Intel / Linux）</li>
+<li>检测系统（Mac ARM64 / Intel）</li>
 <li>从 npmmirror.com 下载 Node.js v22.14.0</li>
 <li>用国内镜像安装 OpenClaw + QQ 插件到 <code>app/</code></li>
 <li>整个过程约 1 分钟</li>
@@ -368,7 +355,7 @@ bash Mac-Start.command   # Mac
 <h2>搭建桌面版（Electron App）</h2>
 <pre><code>cd u-claw/u-claw-app
 
-# Mac / Linux 一键安装
+# Mac 一键安装
 bash setup.sh
 
 # Windows 一键安装
@@ -757,9 +744,9 @@ openclaw logs</code></pre>
 <!-- ===== 维护与卸载 ===== -->
 <div class="page" id="page-maintain">
 <h1>维护与卸载</h1>
-<p>U-Claw 的菜单脚本（Mac-Menu / Linux-Menu / Windows-Menu）内置了完整的维护功能，选择对应编号即可操作。</p>
+<p>U-Claw 的菜单脚本（Mac-Menu / Windows-Menu）内置了完整的维护功能，选择对应编号即可操作。</p>
 
-<div class="tip"><strong>启动方式：</strong>双击 <code>Mac-Menu.command</code>（macOS）、<code>Linux-Menu.sh</code>（Linux）或 <code>Windows-Menu.bat</code>（Windows），在菜单中选择 9-15 进入维护功能。</div>
+<div class="tip"><strong>启动方式：</strong>双击 <code>Mac-Menu.command</code>（macOS）或 <code>Windows-Menu.bat</code>（Windows），在菜单中选择 9-15 进入维护功能。</div>
 
 <h2>[9] 杀死残留进程</h2>
 <div class="card">
@@ -833,12 +820,6 @@ openclaw logs</code></pre>
 </ol>
 <pre><code>rd /s /q "%APPDATA%\U-Claw"</code></pre>
 
-<p><strong>Linux：</strong></p>
-<ol>
-<li>删除 <code>.desktop</code> 文件和应用目录</li>
-<li>删除用户数据：</li>
-</ol>
-<pre><code>rm -rf ~/.config/U-Claw/</code></pre>
 </div>
 
 <div class="card">
@@ -855,11 +836,10 @@ rm -rf ~/.openclaw/</code></pre>
 <p>卸载后如果想确认电脑上完全没有 U-Claw 的痕迹，检查以下目录是否还存在：</p>
 <table>
 <tr><th>路径</th><th>说明</th><th>系统</th></tr>
-<tr><td><code>~/.uclaw/</code></td><td>从 U 盘安装到电脑的版本</td><td>macOS / Linux</td></tr>
+<tr><td><code>~/.uclaw/</code></td><td>从 U 盘安装到电脑的版本</td><td>macOS</td></tr>
 <tr><td><code>~/.openclaw/</code></td><td>npm 全局安装的配置</td><td>所有系统</td></tr>
 <tr><td><code>~/Library/Application Support/U-Claw/</code></td><td>Electron 桌面版数据</td><td>macOS</td></tr>
 <tr><td><code>%APPDATA%\U-Claw\</code></td><td>Electron 桌面版数据</td><td>Windows</td></tr>
-<tr><td><code>~/.config/U-Claw/</code></td><td>Electron 桌面版数据</td><td>Linux</td></tr>
 </table>
 <div class="danger"><strong>⚠️ 删除这些目录后，所有配置和对话记录将永久丢失，无法恢复。</strong></div>
 </div>
@@ -927,7 +907,7 @@ openclaw plugin uninstall &lt;插件名&gt;</code></pre>
 <h3>Q: Windows 需要 WSL 吗？</h3>
 <p>不需要。自带 Windows 版 Node.js。</p>
 <h3>Q: 怎么更新？</h3>
-<p>最简单的方式：运行菜单脚本（Mac-Menu / Linux-Menu / Windows-Menu）选择 <strong>[13] 检查更新</strong>，自动完成。手动方式：U 盘模式运行 <code>cd app/core && npm update openclaw</code>，安装模式运行 <code>npm update -g openclaw</code>。详见 <a href="#" data-page="maintain">维护与卸载</a> 页面。</p>
+<p>最简单的方式：运行菜单脚本（Mac-Menu / Windows-Menu）选择 <strong>[13] 检查更新</strong>，自动完成。手动方式：U 盘模式运行 <code>cd app/core && npm update openclaw</code>，安装模式运行 <code>npm update -g openclaw</code>。详见 <a href="#" data-page="maintain">维护与卸载</a> 页面。</p>
 <h3>Q: 怎么完整卸载？</h3>
 <p>根据你的安装方式不同，卸载步骤也不同。U 盘便携版只需弹出 U 盘即可；桌面版和 npm 版需要额外删除配置目录。详见 <a href="#" data-page="maintain">维护与卸载</a> 页面的完整卸载指南。</p>
 <h3>Q: 配置文件在哪？</h3>
