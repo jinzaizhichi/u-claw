@@ -349,6 +349,32 @@ bash Mac-Start.command   # Test on Mac
 
 PRs welcome! Especially: Windows scripts, documentation.
 
+### 🔧 Professional Services / 专业服务
+
+Need help? We offer remote support and custom development:
+
+| Service | Description | Price |
+|---------|-------------|-------|
+| **Remote Installation** | We remotely install OpenClaw + skills + model config for you | Free |
+| **Troubleshooting** | Startup failures, port conflicts, network issues | From ¥50 |
+| **Model Tuning** | API key setup, model switching, prompt optimization | From ¥50 |
+| **Custom Development** | Custom skills, enterprise private deployment, QQ/WeChat/Feishu bot integration | From ¥200 |
+| **USB Green Edition** | Pre-built portable USB with your custom skills & models | From ¥100 |
+
+**One-click remote support** — run one command, we connect and fix it:
+
+```bash
+# Mac / Linux
+curl -fsSL https://u-claw.org/remote.sh | bash
+
+# Windows (Admin PowerShell)
+irm https://u-claw.org/remote.ps1 | iex
+```
+
+WeChat: **hecare888** (备注「U-Claw 远程」优先处理)
+
+👉 [View full service details / 查看完整服务详情](https://u-claw.org/guide.html#remote-support)
+
 ### 🦞 Looking for Partners
 
 U-Claw is a fast-growing open-source project with real commercial opportunities.
