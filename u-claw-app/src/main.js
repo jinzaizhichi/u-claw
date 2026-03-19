@@ -139,6 +139,51 @@ async function findAvailablePort() {
 function startConfigServer() {
   return new Promise((resolve) => {
     const server = http.createServer((req, res) => {
+      const url = new URL(req.url, `http://${req.headers.host}`);
+
+      // GET /api/config — return current config
+      if (req.method === 'GET' && url.pathname === '/api/config') {
+        res.writeHead(200, { 'Content-Type': 'application/json' });
+        res.end(JSON.stringify(getConfig()));
+        return;
+      }
+
+      // POST /api/config — save/merge config
+      if (req.method === 'POST' && url.pathname === '/api/config') {
+        let body = '';
+        req.on('data', chunk => body += chunk);
+        req.on('end', () => {
+          try {
+            const newConfig = JSON.parse(body);
+            const existing = getConfig();
+            const merged = Object.assign(existing, newConfig);
+            fs.writeFileSync(configPath, JSON.stringify(merged, null, 2));
+            console.log(`[${APP_NAME}] Config saved`);
+            res.writeHead(200, { 'Content-Type': 'application/json' });
+            res.end(JSON.stringify({ ok: true }));
+          } catch (e) {
+            res.writeHead(400, { 'Content-Type': 'application/json' });
+            res.end(JSON.stringify({ error: e.message }));
+          }
+        });
+        return;
+      }
+
+      // POST /api/done — config complete, load dashboard
+      if (req.method === 'POST' && url.pathname === '/api/done') {
+        res.writeHead(200, { 'Content-Type': 'application/json' });
+        res.end(JSON.stringify({ ok: true }));
+        // Switch to dashboard after short delay
+        setTimeout(() => {
+          if (mainWindow && gatewayReady) {
+            const token = getToken();
+            mainWindow.loadURL(`http://127.0.0.1:${gatewayPort}/#token=${token}`);
+          }
+        }, 500);
+        return;
+      }
+
+      // Default: serve Config.html
       const configHtml = path.join(resourcesPath, 'Config.html');
       if (fs.existsSync(configHtml)) {
         res.writeHead(200, { 'Content-Type': 'text/html; charset=utf-8' });
@@ -412,8 +457,13 @@ app.whenReady().then(async () => {
     const port = await findAvailablePort();
     await startGateway(port);
 
-    // Gateway is ready, load the appropriate page
-    loadAppPage();
+    // Gateway is ready — if no model configured, show Config.html first
+    if (hasModelConfigured()) {
+      loadAppPage();
+    } else {
+      console.log(`[${APP_NAME}] No model configured, opening Config.html`);
+      loadConfigPage();
+    }
   } catch (err) {
     console.error(`[${APP_NAME}] Failed to start gateway:`, err);
     dialog.showErrorBox(
