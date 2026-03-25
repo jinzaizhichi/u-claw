@@ -40,9 +40,8 @@ if ($confirm -ne "y" -and $confirm -ne "Y") {
 Write-Host ""
 
 # ---- Generate Device ID ----
-$hostname = $env:COMPUTERNAME.ToLower()
-$rand = -join ((97..122) + (48..57) | Get-Random -Count 4 | ForEach-Object { [char]$_ })
-$DEVICE_ID = "$hostname-$rand"
+$rand = Get-Random -Minimum 1000 -Maximum 9999
+$DEVICE_ID = "pc-$rand"
 
 # ---- Download Agent ----
 Write-Host "  [1/2] Downloading agent..." -ForegroundColor White
@@ -87,10 +86,10 @@ Write-Host "  ==========================================" -ForegroundColor Green
 Write-Host "    Connected! Send this ID to support:" -ForegroundColor Green
 Write-Host "  ==========================================" -ForegroundColor Green
 Write-Host ""
-Write-Host "  +------------------------------------------+" -ForegroundColor Cyan
-Write-Host "  |  Device ID:  $DEVICE_ID" -ForegroundColor Cyan
-Write-Host "  |  Hostname:   $env:COMPUTERNAME" -ForegroundColor Cyan
-Write-Host "  +------------------------------------------+" -ForegroundColor Cyan
+Write-Host ""
+Write-Host "  Device ID:  $DEVICE_ID" -ForegroundColor Green
+Write-Host ""
+Write-Host "  Hostname:   $env:COMPUTERNAME" -ForegroundColor DarkGray
 Write-Host ""
 Write-Host "  * Close this window to disconnect" -ForegroundColor DarkGray
 Write-Host "  * Auto-disconnect after $TIMEOUT_HOURS hours" -ForegroundColor DarkGray
