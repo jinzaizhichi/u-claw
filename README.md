@@ -121,15 +121,39 @@ npm run build:win        # 打包 → release/*.exe
 | MiniMax | 语音多模态 |
 | 豆包 Doubao | 火山引擎 |
 
-SophNet，提供DS，GLM，Qwen，MiniMax，Kimi等多家开源大模型，多达50多种，可以做多模型之间的切换。 
-比如：
-"DeepSeek-V3.2-Fast"
-"DeepSeek-V3.2"
-"MiniMax-M2.7"
-"GLM-5"
-"Kimi-K2.5"
-"Qwen3.5-397B-A17B"
-"Qwen3-VL-235B-A22B-Instruct"
+**大模型聚合平台***
+SophNet，提供DS，GLM，Qwen，MiniMax，Kimi等多家开源大模型，多达50多种，一个API Key可以体验多个顶级大模型。
+** LLM（最新版本） **
+| 国内/国外 | 模型厂商 | 模型类型 | 模型 | 模型id（对外） | 规格 |
+| :--- | :--- | :--- | :--- | :--- | :--- | :--- |
+| 国内 | 深度求索 | LLM | DeepSeek V3.2 Fast | DeepSeek-V3.2-Fast | SophNet独家供给，DeepSeek满血版 TPS 峰值100以上 |
+| 国内 | 深度求索 | LLM | DeepSeek V3.2 Exp | DeepSeek-V3.2-Exp | SophNet算力供给，性能对标火山阿里，超高并发支持 |
+| 国内 | 深度求索 | LLM | DeepSeek V3.2 | DeepSeek-V3.2 | SophNet算力供给，性能对标火山阿里，超高并发支持 |
+| 国内 | 深度求索 | LLM | DeepSeek R1 | DeepSeek-R1 | SophNet算力供给，性能对标火山阿里，超高并发支持 |
+| 国内 | 深度求索 | LLM | DeepSeek-R1-Distill-Qwen-7B | DeepSeek-R1-Distill-Qwen-7B | SophNet算力供给，性能对标火山阿里，超高并发支持 |
+| 国内 | 深度求索 | LLM | DeepSeek-R1-Distill-Qwen-32B | DeepSeek-R1-Distill-Qwen-32B | SophNet算力供给，性能对标火山阿里，超高并发支持 |
+| 国内 | 阿里 | LLM | QwQ-32B | QwQ-32B | SophNet算力供给，性能对标火山阿里，超高并发支持 |
+| 国内 | 阿里 | LLM | Qwen3.5-397B-A17B | Qwen3.5-397B-A17B | SophNet算力供给，性能对标火山阿里，超高并发支持 |
+| 国内 | 月之暗面 | LLM | Kimi-K2.5 | Kimi-K2.5-global | 开绿网版本 |
+| 国内 | 月之暗面 | LLM | Kimi-k2.5 | Kimi-K2.5 | SophNet算力供给，性能对标火山阿里，超高并发支持 |
+| 国内 | 智谱 | LLM | GLM-5 | GLM-5 | SophNet算力供给，性能对标火山阿里，超高并发支持 |
+| 国内 | MiniMax | LLM | MiniMax-M2.5 | MiniMax-M2.5 | SophNet算力供给，性能对标火山阿里，超高并发支持 |
+| 国内 | 字节跳动 | LLM | Seed-OSS-36B-Instruct | Seed-OSS-36B-Instruct | SophNet算力供给，性能对标火山阿里，超高并发支持 |
+| 国内 | 小米 | LLM | MiMo-V2-Flash | MiMo-V2-Flash | SophNet算力供给，性能对标火山阿里，超高并发支持 |
+| 海外 | openai | LLM | GPT-OSS-120B | GPT-OSS-120B | SophNet算力供给，性能对标火山阿里，超高并发支持 |
+| 国内 | 美团 | LLM | LongCat-Flash-Chat | LongCat-Flash-Chat | SophNet算力供给，性能对标火山阿里，超高并发支持 |
+
+** 视觉模型（最新）**
+| 国内 | 阿里 | 视觉模型 | Qwen3-VL-235B-A22B-Instruct | Qwen3-VL-235B-A22B-Instruct | SophNet算力供给，性能对标火山阿里，超高并发支持 |
+| 国内 | 阿里 | 视觉模型 | Qwen2.5-VL-7B-Instruct | Qwen2.5-VL-7B-Instruct | SophNet算力供给，性能对标火山阿里，超高并发支持 |
+| 国内 | 阿里 | 视觉模型 | Qwen2.5-VL-72B-Instruct | Qwen2.5-VL-72B-Instruct | SophNet算力供给，性能对标火山阿里，超高并发支持 |
+| 国内 | 阿里 | 视觉模型 | Qwen2.5-VL-32B-Instruct | Qwen2.5-VL-32B-Instruct | SophNet算力供给，性能对标火山阿里，超高并发支持 |
+| 国内 | 阿里 | 视觉模型 | Qwen2-VL-7B-Instruct | Qwen2-VL-7B-Instruct | SophNet算力供给，性能对标火山阿里，超高并发支持 |
+| 国内 | 阿里 | 视觉模型 | Qwen2-VL-72B-Instruct | Qwen2-VL-72B-Instruct | SophNet算力供给，性能对标火山阿里，超高并发支持 |
+| 国内 | 阿里 | 视觉模型 | qwen-image-edit | Qwen-Image-Edit-2509 | SophNet算力供给，性能对标火山阿里，超高并发支持 |
+| 国内 | 阿里 | 视觉模型 | Qwen-Image | Qwen-Image | SophNet算力供给，性能对标火山阿里，超高并发支持 |
+| 国内 | 阿里 | 视觉模型 | Z-Image-Turbo | Z-Image-Turbo | SophNet算力供给，性能对标火山阿里，超高并发支持 |
+** 更多开闭源模型，请Contact: WeChat: hecare888 **
 可以通过https://www.sophnet.com/#?code=4T6VKY注册了解。
 
 
